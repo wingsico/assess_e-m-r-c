@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <title>
+    <%= title %>
+  </title>
+</head>
+
+<body>
+
+  <div class="container">
+    <%- message %>
+      <form action="" role="form" onsubmit="return false;" method="POST">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h2 class="text-center panel-title">用户登录</h2>
+          </div>
+
+          <div class="panel-body">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">
+                <span class="glyphicon glyphicon-user"></span>
+                </span>
+                <input type="text" class="form-control" name="username" id="username" placeholder="请输入用户名" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">
+                <span class="glyphicon glyphicon-lock"></span>
+                </span>
+                <input type="password" class="form-control" name="password" id="password" placeholder="请输入密码" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary btn-block" id="login">登录</button>
+            </div>
+
+            <p class="text-right">还没有账号？点击<a href="/register">注册</a></p>
+          </div>
+        </div>
+      </form>
+  </div>
+  <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script>
+    $(function (){
+      var username = $('#username')
+      var password = $('#password')
+      username.on('click', function (ev) {
+        $(ev.target).parent().parent().removeClass('has-error')
+      })
+
+      password.on('click', function (ev) {
+        $(ev.target).parent().parent().removeClass('has-error')
+      })
+
+
+      $('#login').on('click', function (ev) {
+        var userVal = username.val()
+        var passVal = password.val()
+        var data = {
+          "username": userVal,
+          "password": passVal
+        }
+        if (!(userVal && passVal)) {
+          if (!userVal) {
+            username.parent().parent().attr('class', 'form-group has-error')
+          }
+          if (!passVal) {
+            password.parent().parent().attr('class', 'form-group has-error')
+          }
+          return false
+        }
+
+        $.ajax({
+          type: "post",
+          url: "http://127.0.0.1:3000/login",
+          data: data,
+          success: function (response) {
+            console.log(response)
+            location.href = '/home'
+          },
+          error: function (err) {
+            console.log(err)
+            location.href = '/login'
+          }
+        });
+      })
+    })
+    
+
+  </script>
+</body>
+
+</html>
