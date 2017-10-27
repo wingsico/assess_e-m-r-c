@@ -27,7 +27,7 @@
   </div>
 
   <!-- 进度条 -->
-  <div class="progress progress-striped active hidden">
+  <div class="progress progress-striped active">
     <div class="progress-bar progress-bar-success" role="progressbar" id="progress" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
     </div>
   </div>
@@ -45,22 +45,38 @@
       var $title = $('#title')
       var $search = $('#search')
       var $progress = $('#progress')
+      var $books = $('#list')
+      $progress.parent().hide()
 
       $search.on('click', (ev) => {
-        $progress.parent().removeClass('hidden')
+        $progress.parent().fadeIn(300)
+
+        function progress() {
+          $progress.css("width", `${len}%`)
+          len += (100 - len) / 200
+          if (!flag) {
+            window.requestAnimationFrame(progress)
+          } else {
+            $progress.css("width", "100%")
+          }
+        }
+
+        function finish_load(html) {
+          flag = true
+          setTimeout(() => {
+            $progress.parent().fadeOut(300, () => {
+              $progress.css("width", "0%")
+              $books.html(html)
+            })
+          }, 800)
+          
+        }
 
         var bookTitle = $title.val()
         var flag = false
         if (bookTitle) {
           var len = 20
-          var timer = setTimeout(() => {
-            $progress.css("width", `${len}%`)
-            len += (100 - len) / 200
-            timer = setTimeout(arguments.callee, 16)
-            if(flag) {
-              clearTimeout(timer)
-            }
-          }, 16);
+          window.requestAnimationFrame(progress)
           $.ajax({
             type: "post",
             url: "http://127.0.0.1:3000/book",
@@ -69,7 +85,6 @@
             },
             success: function(res) {
               if (res.status) {
-                let $books = $('#list')
                 let html = ''
                 res.data.forEach((item) => {
                   html += `<li class="list-group-item">
@@ -80,16 +95,12 @@
                     </li></br>`
                 })
                 html = html ? html : '<p class="alert alert-danger">没有相关搜索，请更换关键字！</p>';
-                flag = true
-                $progress.css("width", "100%")
-                setTimeout(() =>{
-                  $progress.parent().addClass("hidden")
-                  $progress.css("width", "0%")                  
-                }, 800)
-                $books.html(html)
+                finish_load(html)
               }
             },
             error: function(err) {
+              let html = '<p class="alert alert-danger">服务器错误</p>'
+              finish_load(html)
               console.log(err)
             }
           });

@@ -109,7 +109,11 @@ router.route('/book').get((req, res, next) => {
 }).post((req, res) => {
   let strText = req.body.title
   let params = `strSearchType=title&match_flag=forward&historyCount=1&strText=${encodeURI(strText)}&doctype=ALL&with_ebook=on&displaypg=20&showmode=table&sort=CATA_DATE&orderby=desc&dept=ALL`
-  request(book_url + params, (err, resp, body) => {
+  request({
+    method: 'get',
+    url: book_url + params,
+    timeout: 3000
+  }, (err, resp, body) => {
     if (!err && resp.statusCode == 200) {
       let $ = cherrio.load(body)
       let content = $('#result_content')
