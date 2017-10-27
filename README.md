@@ -1,4 +1,4 @@
-##考核
+## 考核
 内容 express + request + cheerio
 完成功能：
 1. 登录注册
@@ -17,7 +17,7 @@
 > supervisor ./bin/www  // or npm start
 </code></pre>
 
-##数据库操作
+## 数据库操作
 <pre><code>> brew install mongodb -g
 > cd /usr/local/bin
 > nano mongodb.conf // 以下目录自行更改
@@ -29,5 +29,5 @@ fork = true
 > ./mongo
 > use userinfo
 > db.createCollection({ username: 'admin', password: '123'})</code></pre>
-##待补充
+## 待补充
 评论功能
