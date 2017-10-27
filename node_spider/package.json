@@ -1,0 +1,17 @@
+{
+  "name": "node_spider",
+  "version": "1.0.0",
+  "description": "",
+  "main": "spider_image.js",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "mongodb": "^2.2.33",
+    "request": "^2.83.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

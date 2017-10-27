@@ -6,3 +6,12 @@ body {
 a {
   color: #00B7FF;
 }
+
+.hidden {
+  display: none;
+}
+
+.icon-mid {
+  position: relative;
+  top: 3px;
+}
