@@ -6,7 +6,7 @@ const DB_CONN_STR = 'mongodb://localhost:27017/userinfo'
 router.route('/').all((req, res, next) => {
   if (req.session && req.session.user) {
     req.session.error = "你已经登录了"
-    return res.redirect('/me_io/home')
+    return res.redirect('/me_io/home/' + req.session.user.username)
   }
   next()
 }).get((req, res) => {

@@ -6,15 +6,21 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session')
 
-var index = require('./routes/index');
 var users = require('./routes/users');
+var index = require('./routes/route_index/Index')
+var login = require('./routes/route_login/Login')
+var loginNcuos = require('./routes/route_login/LoginNcuos')
+var regitser = require('./routes/Register')
+var myHome = require('./routes/route_home/MyHome')
+var logout = require('./routes/route_home/Logout')
+
 
 var app = express();
 // 配置session()
 app.use(session({
   secret: 'secret',
   cookie: {
-    maxAge: 1000 * 60 * 30
+    maxAge: 1000 * 60 * 300
   },
   resave: false,
   saveUninitialized: true
@@ -46,6 +52,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+app.use('/me_io/login', login);
+app.use('/me_io/register', regitser);
+app.use('/me_io/home', myHome);
+app.use('/me_io/logout', logout)
+app.use('/ncuos/login', loginNcuos);
 app.use('/users', users);
 
 // catch 404 and forward to error handler

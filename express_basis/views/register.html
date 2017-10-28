@@ -81,13 +81,13 @@
         }
         $.ajax({
           type: "post",
-          url: "http://127.0.0.1:3000/register",
+          url: "http://127.0.0.1:3000/me_io/register",
           data: data,
           success: function (response) {
-            location.href = '/login'
+            location.href = '/me_io/login'
           },
           error: function (err) {
-            location.href = '/register'
+            location.reload()
             console.log(err)
           }
         });
