@@ -45,7 +45,7 @@
               <button type="submit" class="btn btn-primary btn-block" id="login">登录</button>
             </div>
 
-            <p class="text-right">还没有账号？点击<a href="/register">注册</a></p>
+            <p class="text-right">还没有账号？点击<a href="/me_io/register">注册</a></p>
           </div>
         </div>
       </form>
@@ -84,15 +84,15 @@
 
         $.ajax({
           type: "post",
-          url: "http://127.0.0.1:3000/login",
+          url: "http://127.0.0.1:3000/me_io/login",
           data: data,
           success: function (response) {
             console.log(response)
-            location.href = '/home'
+            location.href = '/me_io/home/' + response.data
           },
           error: function (err) {
             console.log(err)
-            location.href = '/login'
+            location.reload()
           }
         });
       })
