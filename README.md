@@ -9,7 +9,7 @@
 <code>/node_spider</code>是练手爬虫，不用管，用于简单爬取网站的轮播图相关信息
 <code>/express_basis</code>为主要内容
 由于<code>.gitignore</code>没写好有一些文件传上来了，暂时不用管
-##使用方法
+## 使用方法
 <pre><code>> git clone git@github.com:wingsico/assess_e-m-r-c.git
 > cd assess_e-m-r-c
 > npm install
