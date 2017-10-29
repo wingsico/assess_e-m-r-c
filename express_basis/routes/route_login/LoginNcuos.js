@@ -2,7 +2,13 @@ var express = require('express')
 var router = express.Router()
 var request = require('request')
 
-router.route('/').get((req, res, next) => {
+router.route('/').all((req, res, next) => {
+  if (req.session && req.session.student) {
+    req.session.error = '你已经登录，若要再次登录请注销'
+    return res.redirect('/ncuos/home/')
+  }
+  next()
+}).get((req, res, next) => {
   return res.render('login_page/login_ncuos', {
     title: '云家园登录'
   })
@@ -11,6 +17,7 @@ router.route('/').get((req, res, next) => {
     username: req.body.username,
     password: req.body.password
   }
+  console.log(user)
   request({
     url: 'https://os.ncuos.com/api/user/token',
     method: "POST",
@@ -32,7 +39,6 @@ router.route('/').get((req, res, next) => {
         status: 1,
         data: student
       })
-
     } else {
       console.log(err)
     }

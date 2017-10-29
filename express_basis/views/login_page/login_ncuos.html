@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css" />
   <link rel='stylesheet' href='/stylesheets/style.css' />
   <title>
     <%= title %>
@@ -13,6 +13,7 @@
 </head>
 <body>
 <div class="container">
+  <div class="row col-md-6 col-md-offset-3">
   <%- message %>
     <form action="" role="form" onsubmit="return false;" method="POST">
       <div class="panel panel-info">
@@ -20,7 +21,7 @@
           <h2 class="text-center panel-title"><i class="glyphicon glyphicon-cloud icon-mid"></i> 云家园登录</h2>
         </div>
 
-        <div class="panel-body">
+        <div class="panel-body" style="padding: 30px;">
           <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon">
@@ -41,16 +42,17 @@
 
           <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block" id="login">登录</button>
+            <a href="/" class="btn btn-info btn-block">主页</a>
           </div>
-
         </div>
       </div>
     </form>
+  </div>
 </div>
 
 
-  <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="/javascripts/jquery-3.2.1.min.js"></script>
+  <script src="/javascripts/bootstrap.min.js"></script>
   <script>
     $(function () {
         var username = $('#username')
@@ -63,6 +65,9 @@
           $(ev.target).parent().parent().removeClass('has-error')
         })
 
+        function setStudentMsg(student) {
+          localStorage.setItem('student', JSON.stringify(student))
+        }
 
         $('#login').on('click', function (ev) {
           var userVal = username.val()
@@ -89,8 +94,12 @@
             },
             data: JSON.stringify(data),
             success: function (response) {
-              console.log(response)
-              alert('验证成功')
+              var data = {
+                "username": response.data.username,
+                "token": response.data.token
+              }
+              setStudentMsg(data)
+              window.location.href = '/ncuos/home'
             },
             error: function (err) {
               console.log(err)

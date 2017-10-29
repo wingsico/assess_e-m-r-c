@@ -1,8 +1,15 @@
 var express = require('express')
 var router = express.Router()
 
-router.route('/book').get((req, res, next) => {
-  return res.render('book', { title: '图书查询' })
+router.route('/').all((req, res, next) => {
+  if (!req.session.student) {
+    req.session.error = '请先登录云家园'
+    return res.redirect('/ncuos/login')
+  }
+
+  next()
+}).get((req, res, next) => {
+  return res.render('book_page/book', { title: '图书查询' })
 }).post((req, res) => {
   let strText = req.body.title
   let params = `strSearchType=title&match_flag=forward&historyCount=1&strText=${encodeURI(strText)}&doctype=ALL&with_ebook=on&displaypg=20&showmode=table&sort=CATA_DATE&orderby=desc&dept=ALL`

@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css" />
   <link rel='stylesheet' href='/stylesheets/style.css' />
   <title>
     <%= title %>
@@ -38,8 +38,8 @@
 </div>
 
 <body>
-  <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="/javascripts/jquery-3.2.1.min.js"></script>
+  <script src="/javascripts/bootstrap.min.js"></script>
   <script>
     $(function() {
       var $title = $('#title')
@@ -79,7 +79,7 @@
           window.requestAnimationFrame(progress)
           $.ajax({
             type: "post",
-            url: "http://127.0.0.1:3000/book",
+            url: "http://127.0.0.1:3000/ncuos/home/search_book",
             data: {
               title: bookTitle
             },

@@ -12,8 +12,10 @@ var login = require('./routes/route_login/Login')
 var loginNcuos = require('./routes/route_login/LoginNcuos')
 var regitser = require('./routes/Register')
 var myHome = require('./routes/route_home/MyHome')
-var logout = require('./routes/route_home/Logout')
-
+var ncuHome = require('./routes/route_home/NcuHome')
+var myLogout = require('./routes/route_home/myLogout')
+var ncuLogout = require('./routes/route_home/NcuLogout')
+var book = require('./routes/route_book/SearchBook')
 
 var app = express();
 // 配置session()
@@ -36,6 +38,7 @@ app.set('view engine', 'html');
 
 app.use((req, res, next) => {
   res.locals.user = req.session.user
+  res.locals.student = req.session.student
   let err = req.session.error
   delete req.session.error
   res.locals.message = ''
@@ -55,8 +58,11 @@ app.use('/', index);
 app.use('/me_io/login', login);
 app.use('/me_io/register', regitser);
 app.use('/me_io/home', myHome);
-app.use('/me_io/logout', logout)
+app.use('/me_io/logout', myLogout)
 app.use('/ncuos/login', loginNcuos);
+app.use('/ncuos/home', ncuHome);
+app.use('/ncuos/home/search_book', book)
+app.use('/ncuos/logout', ncuLogout)
 app.use('/users', users);
 
 // catch 404 and forward to error handler
